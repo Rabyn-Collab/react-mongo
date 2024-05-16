@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const Header = () => {
   return (
@@ -7,8 +8,9 @@ const Header = () => {
       <h1 className='text-2xl '>TailWind</h1>
 
       <nav className='space-x-4'>
-        <button>About</button>
-        <button>Contact</button>
+
+        <NavLink to='/about'>About</NavLink>
+        <NavLink to='contact'>Contact</NavLink>
 
       </nav>
 

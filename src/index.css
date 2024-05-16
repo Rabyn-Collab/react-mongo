@@ -5,9 +5,9 @@
 
 
 
-body {
+/* body {
   font-family: "Poetsen One", sans-serif;
-}
+} */
 
 .btn {
   @apply bg-black text-red-600 p-5 rounded-full
