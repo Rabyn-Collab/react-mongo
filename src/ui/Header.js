@@ -12,8 +12,8 @@ const Header = () => {
 
       <nav className='space-x-4'>
 
-        <NavLink to='/about' className={(e) => {
-          console.log(e);
+        <NavLink to='/about' className={({ isActive }) => {
+          return isActive ? 'text-pink-800' : 'text-white'
         }}>About</NavLink>
         <NavLink to='contact'>Contact</NavLink>
 
