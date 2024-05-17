@@ -1,12 +1,23 @@
 import React from 'react'
+import { products } from '../dummy/data';
 
-
+const personName = 'lios';
 const Home = () => {
+
+
+
   return (
     <div>
 
-      <h1> This is Home</h1>
-      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi suscipit voluptate nostrum voluptatum asperiores, nam id consequatur aspernatur! Debitis, mollitia totam consequatur similique id magni officia dignissimos, ducimus dolore veniam in minus quia nihil aperiam sequi tempore nostrum repellendus commodi deleniti vero et quidem! Sed culpa modi nostrum beatae odit?</p>
+      <h1>Show Products</h1>
+
+      {products.map((product) => {
+        return <div key={product.id}>
+
+        </div>
+      })}
+
+
 
 
 
