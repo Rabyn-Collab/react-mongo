@@ -1,10 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
 
-body {
+/* body {
   font-family: "Poetsen One", sans-serif;
+} */
+
+.btn {
+  @apply bg-black text-red-600 p-5 rounded-full
 }
