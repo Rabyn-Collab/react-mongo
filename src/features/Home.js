@@ -1,16 +1,10 @@
-import React, { useState } from 'react'
-import { useApiHooks } from './hooks/apiHooks'
-
+import React from 'react'
+import AddFormReg from './AddFormReg'
 
 const Home = () => {
-  const [data, load] = useApiHooks('https://fakestoreapi.com/products');
-
   return (
     <div>
-
-
-
-
+      <AddFormReg />
     </div>
   )
 }
