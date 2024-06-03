@@ -12,12 +12,21 @@ import {
   Option
 } from "@material-tailwind/react";
 import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { addUser } from './useSlice';
+import { nanoid } from '@reduxjs/toolkit';
 const AddForm = () => {
+  const dispatch = useDispatch();
+
 
   const userSchema = Yup.object({
     username: Yup.string().required('Required'),
     email: Yup.string().matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, 'lkjlkjlkj').required('mail is required'),
-
+    hobbies: Yup.array().min(1).required(),
+    image: Yup.mixed().test('fileType', 'invalid Image', (e) => {
+      const filesType = ["image/jpeg", "image/jpg", "image/png"];
+      return filesType.includes(e.type);
+    }).required()
   });
 
 
@@ -28,18 +37,28 @@ const AddForm = () => {
       gender: '',
       hobbies: [],
       msg: '',
-      country: ''
+      country: '',
+      imageReview: null,
+      image: null
     },
     onSubmit: (val) => {
-      console.log(val);
+      dispatch(addUser({ ...val, id: nanoid() }))
     },
     validationSchema: userSchema
   });
 
 
+  // const nios = ['p', 'l'];
+  // const m = [...nios, 'lio'];
+
+  // const n = {
+  //   m: 90
+  // };
 
 
+  // console.log({ ...n, l: 9 });
 
+  console.log(URL);
 
   return (
     <div className='max-w-[400px] p-2'>
@@ -101,7 +120,9 @@ const AddForm = () => {
                     color={check.color}
                   />
                 })}
+
               </div>
+              {errors.hobbies && touched.hobbies && <p className='text-pink-400'>{errors.hobbies}</p>}
             </div>
 
             <div className="w-72 my-3">
@@ -126,12 +147,21 @@ const AddForm = () => {
 
               <h1>Please Select an Image</h1>
               <Input
-                name='file'
+                name='image'
+
                 onChange={(e) => {
-                  console.log(e.target.files);
+                  const file = e.target.files[0];
+                  setFieldValue('image', file);
+                  setFieldValue('imageReview', URL.createObjectURL(file))
                 }}
                 type='file'
               />
+
+              {values.imageReview && <img src={values.imageReview} alt="" />}
+
+              {errors.image && touched.image && <p className='text-pink-400'>{errors.image}</p>}
+
+
             </div>
 
 
