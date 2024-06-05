@@ -58,7 +58,6 @@ const AddForm = () => {
 
   // console.log({ ...n, l: 9 });
 
-  console.log(URL);
 
   return (
     <div className='max-w-[400px] p-2'>
