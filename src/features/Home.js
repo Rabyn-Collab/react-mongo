@@ -1,25 +1,24 @@
 import React from 'react'
-import AddForm from './users/AddForm'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router';
 
 const Home = () => {
+  const { users } = useSelector((state) => state.userSlice);
 
-  // const kios = [{ id: 1, label: 'lio' }, { id: 2, label: 'sio' }];
-
-  // const m = kios.map((k) => {
-  //   return k.id === 1 ? { id: 1, label: 'mio' } : k;
-  // });
-
-  // console.log(m);
-
-  // const jiso = ['l', 'm', 'c'];
-
-  // jiso.splice(2, 1);
-
-  // console.log(jiso);
-
+  const nav = useNavigate();
   return (
     <div>
-      <AddForm />
+
+
+      {users.map((user) => {
+        return <div key={user.id}>
+          <h1>{user.email}</h1>
+          <img src={user.imageReview} alt="" />
+          <button onClick={() => nav(`/updateForm/${user.id}`, { state: user })}>Edit</button>
+        </div>
+      })}
+
+
 
     </div>
   )

@@ -12,14 +12,20 @@ import {
   Option
 } from "@material-tailwind/react";
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from './useSlice';
 import { nanoid } from '@reduxjs/toolkit';
-import { useNavigate } from 'react-router';
-const AddForm = () => {
+import { useLocation, useParams } from 'react-router';
+const UpdateForm = () => {
   const dispatch = useDispatch();
+  const { users } = useSelector((state) => state.userSlice);
+  const { id } = useParams();
 
-  const nav = useNavigate();
+  const existUser = users.find((user) => user.id === id);
+
+  console.log(existUser);
+
+
   const userSchema = Yup.object({
     username: Yup.string().required('Required'),
     email: Yup.string().matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, 'lkjlkjlkj').required('mail is required'),
@@ -33,20 +39,19 @@ const AddForm = () => {
 
   const { handleChange, handleSubmit, values, setFieldValue, errors, touched } = useFormik({
     initialValues: {
-      username: '',
-      email: '',
-      gender: '',
-      hobbies: [],
-      msg: '',
-      country: '',
+      username: existUser.username,
+      email: existUser.email,
+      gender: existUser.gender,
+      hobbies: existUser.hobbies,
+      msg: existUser.msg,
+      country: existUser.country,
       imageReview: null,
-      // image: null
+      image: null
     },
     onSubmit: (val) => {
-      dispatch(addUser({ ...val, id: nanoid() }));
-      nav(-1);
+      dispatch(addUser({ ...val, id: nanoid() }))
     },
-    //validationSchema: userSchema
+    validationSchema: userSchema
   });
 
 
@@ -97,6 +102,7 @@ const AddForm = () => {
               {radData.map((rad, i) => {
                 return <Radio
                   key={i}
+                  checked={values.gender === rad.value}
                   name="gender"
                   onChange={handleChange}
                   label={rad.label}
@@ -114,6 +120,7 @@ const AddForm = () => {
                 {checkData.map((check, i) => {
                   return <Checkbox
                     key={i}
+                    checked={values.hobbies.includes(check.value)}
                     name="hobbies"
                     onChange={handleChange}
                     label={check.label}
@@ -127,7 +134,7 @@ const AddForm = () => {
             </div>
 
             <div className="w-72 my-3">
-              <Select name='country' onChange={(e) => setFieldValue('country', e)} label="Select Country">
+              <Select value={values.country} name='country' onChange={(e) => setFieldValue('country', e)} label="Select Country">
                 <Option value='nepal'>Nepal</Option>
                 <Option value='india'>India</Option>
                 <Option value='china'>China</Option>
@@ -152,7 +159,7 @@ const AddForm = () => {
 
                 onChange={(e) => {
                   const file = e.target.files[0];
-                  //setFieldValue('image', file);
+                  setFieldValue('image', file);
                   setFieldValue('imageReview', URL.createObjectURL(file))
                 }}
                 type='file'
@@ -187,7 +194,7 @@ const AddForm = () => {
   )
 }
 
-export default AddForm
+export default UpdateForm
 
 
 

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { addUserToLocal, getUserFromLocal } from "../../hooks/localStorage";
 
 
 
@@ -6,11 +7,12 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: 'userSlice',
   initialState: {
-    users: []
+    users: getUserFromLocal()
   },
   reducers: {
     addUser: (state, action) => {
       state.users.push(action.payload);
+      addUserToLocal(state.users);
     },
     updateUser: (state, action) => {
       state.users = state.users.map((user) => user.id === action.payload.id ? action.payload : user);
