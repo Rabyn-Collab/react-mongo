@@ -13,17 +13,16 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from './useSlice';
-import { nanoid } from '@reduxjs/toolkit';
-import { useLocation, useParams } from 'react-router';
+import { updateUser } from './useSlice';
+import { useNavigate, useParams } from 'react-router';
 const UpdateForm = () => {
+  const nav = useNavigate();
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.userSlice);
   const { id } = useParams();
 
   const existUser = users.find((user) => user.id === id);
 
-  console.log(existUser);
 
 
   const userSchema = Yup.object({
@@ -45,13 +44,14 @@ const UpdateForm = () => {
       hobbies: existUser.hobbies,
       msg: existUser.msg,
       country: existUser.country,
-      imageReview: null,
-      image: null
+      imageReview: existUser.imageReview,
+      // image: null
     },
     onSubmit: (val) => {
-      dispatch(addUser({ ...val, id: nanoid() }))
+      dispatch(updateUser({ ...val, id: existUser.id }));
+      nav(-1);
     },
-    validationSchema: userSchema
+    //validationSchema: userSchema
   });
 
 
