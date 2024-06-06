@@ -162,15 +162,14 @@ const UpdateForm = () => {
                   const reader = new FileReader();
                   reader.readAsDataURL(file);
                   reader.addEventListener('load', (e) => {
-                    console.log(e);
+                    setFieldValue('imageReview', e.target.result);
                   })
-                  setFieldValue('imageReview', URL.createObjectURL(file))
+                  setFieldValue('image', file);
                 }}
                 type='file'
               />
 
               {values.imageReview && <img src={values.imageReview} alt="" />}
-
               {errors.image && touched.image && <p className='text-pink-400'>{errors.image}</p>}
 
 
