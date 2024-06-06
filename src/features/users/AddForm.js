@@ -39,8 +39,8 @@ const AddForm = () => {
       hobbies: [],
       msg: '',
       country: '',
-      imageReview: null,
-      // image: null
+
+      image: null
     },
     onSubmit: (val) => {
       dispatch(addUser({ ...val, id: nanoid() }));
@@ -152,8 +152,12 @@ const AddForm = () => {
 
                 onChange={(e) => {
                   const file = e.target.files[0];
-                  //setFieldValue('image', file);
-                  setFieldValue('imageReview', URL.createObjectURL(file))
+                  // const reader = new FileReader();
+                  // reader.readAsDataURL(file);
+                  // reader.addEventListener('load', (e) => {
+                  //   console.log(e);
+                  // })
+                  setFieldValue('image', file)
                 }}
                 type='file'
               />
