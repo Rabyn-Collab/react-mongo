@@ -5,18 +5,18 @@ import { useNavigate } from 'react-router';
 const Home = () => {
   const { users } = useSelector((state) => state.userSlice);
 
-  const nav = useNavigate();
+
   return (
     <div>
 
+      <div onClick={() => {
+        document.getElementsByClassName('.root').innerHTML = 'red';
+        console.log('hello');
+      }} className="root">
+        <h1>as;ldjsa;dlj;l</h1>
+      </div>
 
-      {users.map((user) => {
-        return <div key={user.id}>
-          <h1>{user.email}</h1>
-          <img src={user.imageReview} alt="" />
-          <button onClick={() => nav(`/updateForm/${user.id}`, { state: user })}>Edit</button>
-        </div>
-      })}
+
 
 
 
