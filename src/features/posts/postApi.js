@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { baseUrl } from '../../constants/constants';
+import { faker } from '@faker-js/faker';
 
 
 export const postApi = createApi({
@@ -18,7 +19,24 @@ export const postApi = createApi({
           id: user.id
         }
       }),
+      providesTags: (res, err, user) => {
+        return [{ type: 'UserPost', id: user.id }];
+      }
 
+    }),
+
+    addUserPost: builder.mutation({
+      query: (user) => ({
+        url: '/posts',
+        method: 'POST',
+        body: {
+          userId: user.id,
+          title: faker.music.songName()
+        }
+      }),
+      invalidatesTags: (res, err, user) => {
+        return [{ type: 'UserPost', id: user.id }];
+      }
     }),
 
 
@@ -27,12 +45,8 @@ export const postApi = createApi({
 
   }),
 
-
-
-
-
 });
 
 
 
-export const { useGetUserPostQuery } = postApi;
+export const { useGetUserPostQuery, useAddUserPostMutation } = postApi;

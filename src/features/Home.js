@@ -27,7 +27,7 @@ const Home = () => {
   return (
     <div className='p-4'>
 
-      {data.map((user, i) => {
+      {data?.map((user, i) => {
         return <Accordion open={opens.includes(i)} key={user.id}>
           <AccordionHeader onClick={() => handleOpen(i)}>{user.username}</AccordionHeader>
 
