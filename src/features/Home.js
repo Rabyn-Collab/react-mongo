@@ -12,7 +12,7 @@ const Home = () => {
 
   const { isLoading, isError, error, data } = useGetUsersQuery();
 
-  const [opens, setOpens] = useState([]);
+  const [opens, setOpens] = useState([0]);
 
   const handleClick = (index) => {
     if (opens.includes(index)) {
