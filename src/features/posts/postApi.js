@@ -20,10 +20,9 @@ export const postApi = createApi({
           userId: user.id
         }
       }),
-
-      providesTags: ['UserPost']
-
-
+      providesTags: (res, err, user) => {
+        return [{ type: 'UserPost', id: user.id }]
+      }
     }),
 
     addPost: builder.mutation({
@@ -35,7 +34,19 @@ export const postApi = createApi({
         },
         method: 'POST'
       }),
-      invalidatesTags: ['UserPost']
+      invalidatesTags: (res, err, user) => {
+        return [{ type: 'UserPost', id: user.id }]
+      }
+    }),
+
+    removePost: builder.mutation({
+      query: (id) => ({
+        url: `/posts/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: (res, err, user) => {
+        return [{ type: 'UserPost', id: res.userId }]
+      }
     })
 
 

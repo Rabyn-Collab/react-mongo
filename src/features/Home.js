@@ -5,13 +5,24 @@ import PostUi from './posts/PostUi';
 
 const Home = () => {
 
+  const per = {
+    nam: 'lio'
+  };
+
+
+
+  // const { nam } = per;
+  // const { nam: li } = per;
+
+
+
+
   // const nios = [11, 22, 44, 55];
   // nios.splice(0, 1);
 
   // console.log(nios);
 
   const { isLoading, isError, error, data } = useGetUsersQuery();
-  useGetUsersQuery();
 
   const [opens, setOpens] = useState([]);
 
