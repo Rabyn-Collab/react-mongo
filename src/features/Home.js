@@ -11,8 +11,9 @@ const Home = () => {
   // console.log(nios);
 
   const { isLoading, isError, error, data } = useGetUsersQuery();
+  useGetUsersQuery();
 
-  const [opens, setOpens] = useState([0]);
+  const [opens, setOpens] = useState([]);
 
   const handleClick = (index) => {
     if (opens.includes(index)) {

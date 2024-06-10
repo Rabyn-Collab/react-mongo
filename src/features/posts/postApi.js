@@ -21,6 +21,9 @@ export const postApi = createApi({
         }
       }),
 
+      providesTags: ['UserPost']
+
+
     }),
 
     addPost: builder.mutation({
@@ -31,7 +34,8 @@ export const postApi = createApi({
           userId: user.id
         },
         method: 'POST'
-      })
+      }),
+      invalidatesTags: ['UserPost']
     })
 
 

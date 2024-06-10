@@ -9,7 +9,6 @@ const PostUi = ({ user }) => {
   const [addPost, { isLoading: load, data: dat, error: err }] = useAddPostMutation();
 
 
-  console.log(data);
 
   if (isLoading) {
     return <h1>Loading....</h1>
@@ -26,7 +25,7 @@ const PostUi = ({ user }) => {
       <div className='flex justify-between mb-4[]'>
         <h1 className='text-lg text-gray-800'>{user.info}</h1>
 
-        <Button onClick={() => addPost(user)} className='bg-green-600 ' size='sm'>Add</Button>
+        <Button loading={load} onClick={() => addPost(user)} className='bg-green-600 ' size='sm'>Add</Button>
       </div>
 
 
