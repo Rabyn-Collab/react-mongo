@@ -11,7 +11,7 @@ const Header = () => {
       <h1 className='text-2xl '>TailWind</h1>
 
       <nav className='space-x-4'>
-        <NavLink to='/addForm'>AddForm</NavLink>
+        <NavLink to='/login'>Login</NavLink>
         <NavLink to='/about' className={({ isActive }) => {
           return isActive ? 'text-pink-800' : 'text-white'
         }}>About</NavLink>

@@ -1,3 +1,4 @@
 
 
-export const baseUrl = 'https://66612cfb63e6a0189fe8bdc0.mockapi.io';
+export const baseUrl = 'http://192.168.0.143:5000/api';
+export const userUrl = `${baseUrl}/users`;
