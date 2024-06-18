@@ -2,14 +2,17 @@ import React from 'react'
 import {
   Card,
   Input,
-
   Button,
   Typography,
 } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom/dist';
 import { useFormik } from 'formik';
+import { useUserRegisterMutation } from './userApi';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
+  const [registerUser, { isLoading }] = useUserRegisterMutation();
+
   const nav = useNavigate();
 
   const { handleChange, values, handleSubmit, handleReset } = useFormik({
@@ -17,7 +20,17 @@ const SignUp = () => {
       email: '',
       password: '',
       username: ''
+    },
+    onSubmit: async (val) => {
+      try {
+        const response = await registerUser(val).unwrap();
+        toast.success('successfully register');
+        nav(-1);
+      } catch (err) {
+        toast.error(err.data?.message);
+      }
     }
+
   });
 
 
@@ -80,7 +93,7 @@ const SignUp = () => {
             />
           </div>
 
-          <Button type='submit' className="mt-6" fullWidth>
+          <Button loading={isLoading} disabled={isLoading} type='submit' className="mt-6" fullWidth>
             Submit
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">

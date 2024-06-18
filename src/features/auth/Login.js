@@ -8,12 +8,15 @@ import {
 import { useNavigate } from 'react-router-dom/dist';
 import { useFormik } from 'formik';
 import { useUserLoginMutation } from './userApi';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { addUser } from './userSlice';
 
 const Login = () => {
 
   const [loginUser, { isLoading }] = useUserLoginMutation();
   const nav = useNavigate();
-
+  const dispatch = useDispatch();
 
   const { handleChange, values, handleSubmit, handleReset } = useFormik({
     initialValues: {
@@ -22,9 +25,12 @@ const Login = () => {
     },
     onSubmit: async (val) => {
       try {
-        await loginUser(val);
+        const response = await loginUser(val).unwrap();
+        dispatch(addUser(response));
+        toast.success('successfully login');
+        nav(-1);
       } catch (err) {
-        console.log(err);
+        toast.error(err.data?.message);
       }
     }
   });
@@ -73,7 +79,7 @@ const Login = () => {
             />
           </div>
 
-          <Button type='submit' className="mt-6" fullWidth>
+          <Button loading={isLoading} disabled={isLoading} type='submit' className="mt-6" fullWidth>
             Submit
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
