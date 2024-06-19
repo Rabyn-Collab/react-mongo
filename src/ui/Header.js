@@ -166,7 +166,7 @@ const Header = () => {
           href="#"
           className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
         >
-          Material Tailwind
+          Material Tailwinds
         </Typography>
 
         <IconButton

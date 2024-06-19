@@ -26,6 +26,7 @@ const Login = () => {
     onSubmit: async (val) => {
       try {
         const response = await loginUser(val).unwrap();
+        console.log(response);
         dispatch(addUser(response));
         toast.success('successfully login');
         nav(-1);

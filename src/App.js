@@ -6,6 +6,15 @@ import RootLayout from './ui/RootLayout';
 import NotFound from './ui/NotFound';
 import Login from './features/auth/Login';
 import SignUp from './features/auth/SignUp';
+import UserRoutes from './ui/UserRoutes';
+
+
+const movie = {
+  name: 'avatar',
+  actors: [
+
+  ]
+};
 
 const router = createBrowserRouter([
   {
@@ -13,8 +22,19 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'login', element: <Login /> },
+
+      {
+        element: <UserRoutes />,
+        children: [
+          { path: 'login', element: <Login /> },
+        ]
+      },
+
+
+
       { path: 'signup', element: <SignUp /> },
+
+
 
       { path: 'about', element: <About /> },
       { path: '*', element: <NotFound /> },

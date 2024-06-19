@@ -4,7 +4,11 @@ import { userUrl } from '../../constants/constants';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({ baseUrl: userUrl }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: userUrl
+  }),
+
+
   endpoints: (builder) => ({
 
     userLogin: builder.mutation({
