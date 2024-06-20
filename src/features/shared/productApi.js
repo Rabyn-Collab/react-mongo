@@ -18,6 +18,13 @@ export const productApi = createApi({
       })
     }),
 
+    getTopProducts: builder.query({
+      query: () => ({
+        url: '/top_products',
+        method: 'GET'
+      })
+    }),
+
     getProductById: builder.query({
       query: (query) => ({
         url: `/${query}`,
@@ -31,4 +38,4 @@ export const productApi = createApi({
 });
 
 
-export const { useGetProductsQuery, useGetProductByIdQuery } = productApi;
+export const { useGetProductsQuery, useGetProductByIdQuery, useGetTopProductsQuery } = productApi;
