@@ -3,6 +3,7 @@ import { useGetProductsQuery } from '../shared/productApi'
 import { Button, Card, CardBody, CardFooter, CardHeader, Typography } from '@material-tailwind/react';
 import Cara from './Cara';
 import { useNavigate } from 'react-router';
+import { imageUrl } from '../../constants/constants';
 
 const Home = () => {
   const { data, isLoading, error } = useGetProductsQuery();
@@ -25,7 +26,7 @@ const Home = () => {
             <CardHeader color="blue-gray" className="relative ">
               <img
                 className='w-full'
-                src={product_image}
+                src={`${imageUrl}${product_image}`}
                 alt="card-image"
               />
             </CardHeader>

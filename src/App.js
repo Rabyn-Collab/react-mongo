@@ -8,6 +8,8 @@ import Login from './features/auth/Login';
 import SignUp from './features/auth/SignUp';
 import UserRoutes from './ui/UserRoutes';
 import Detail from './features/home/Detail';
+import AdminProducts from './features/admin/ProductAdmin';
+import ProductForm from './features/admin/ProductForm';
 
 
 const movie = {
@@ -32,8 +34,10 @@ const router = createBrowserRouter([
           { path: 'signup', element: <SignUp /> },
         ]
       },
+      { path: 'allProducts', element: <AdminProducts /> },
+      { path: 'add-product', element: <ProductForm /> },
+      { path: 'about', element: <About /> },
 
-      { path: '', element: <About /> },
 
 
 

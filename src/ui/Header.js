@@ -64,6 +64,7 @@ const adminProfile = [
 function ProfileMenu({ user }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const dispatch = useDispatch();
+  const nav = useNavigate();
   const closeMenu = () => setIsMenuOpen(false);
   const menuItems = user.isAdmin ? adminProfile : userProfile;
 
@@ -73,8 +74,8 @@ function ProfileMenu({ user }) {
 
         break;
 
-      case 'product':
-
+      case 'products':
+        nav('/allProducts');
         break;
 
       case 'logout':
