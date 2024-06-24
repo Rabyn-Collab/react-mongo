@@ -11,6 +11,8 @@ import Detail from './features/home/Detail';
 import AdminProducts from './features/admin/ProductAdmin';
 import ProductForm from './features/admin/ProductForm';
 
+import ProductEdit from './features/admin/ProductEdit/ProductEdit';
+
 
 const movie = {
   name: 'avatar',
@@ -36,6 +38,9 @@ const router = createBrowserRouter([
       },
       { path: 'allProducts', element: <AdminProducts /> },
       { path: 'add-product', element: <ProductForm /> },
+      { path: 'edit-product/:id', element: <ProductEdit /> },
+
+
       { path: 'about', element: <About /> },
 
 

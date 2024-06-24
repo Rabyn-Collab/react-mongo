@@ -15,7 +15,8 @@ export const productApi = createApi({
       query: (query) => ({
         url: '/',
         method: 'GET'
-      })
+      }),
+      providesTags: ['Product']
     }),
 
     getTopProducts: builder.query({
@@ -42,7 +43,8 @@ export const productApi = createApi({
         headers: {
           Authorization: query.token
         }
-      })
+      }),
+      invalidatesTags: ['Product']
     }),
 
 

@@ -8,17 +8,17 @@ import {
   Select,
 } from "@material-tailwind/react";
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
-import { useNavigate } from "react-router";
-import { useAddProductMutation } from "../shared/productApi";
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { imageUrl } from "../../../constants/constants";
 
-const ProductForm = () => {
 
-  const [addProduct, { isLoading }] = useAddProductMutation();
+const ProductEditForm = ({ data }) => {
+
   const { user } = useSelector((state) => state.userSlice);
   const nav = useNavigate();
+
   const productSchema = Yup.object({
     product_name: Yup.string().required(),
     product_detail: Yup.string().required(),
@@ -26,58 +26,39 @@ const ProductForm = () => {
     countInStock: Yup.number().required(),
     brand: Yup.string().required(),
     category: Yup.string().required(),
-    product_image: Yup.mixed().required().test('fileType', 'invalid image', (e) => {
-      return ['image/jpg', 'image/png', 'image/jpeg'].includes(e.type);
-    })
+    // product_image: Yup.mixed().required().test('fileType', 'invalid image', (e) => {
+    //   return ['image/jpg', 'image/png', 'image/jpeg'].includes(e.type);
+    // })
   });
 
   const { values, handleChange,
     handleSubmit, errors, setFieldValue, touched } = useFormik({
 
       initialValues: {
-        product_name: '',
-        product_detail: '',
-        product_price: '',
-        countInStock: '',
-        brand: '',
-        category: '',
+        product_name: data.product_name,
+        product_detail: data.product_detail,
+        product_price: data.product_price,
+        countInStock: data.countInStock,
+        brand: data.brand,
+        category: data.category,
         product_image: null,
-        imageReview: ''
+        imageReview: data.product_image
 
       },
 
       onSubmit: async (val, { resetForm }) => {
-        const formData = new FormData();
 
-        formData.append('product_name', val.product_name);
-        formData.append('product_detail', val.product_detail);
-        formData.append('product_price', Number(val.product_price));
-        formData.append('countInStock', Number(val.countInStock));
-        formData.append('category', val.category);
-        formData.append('brand', val.brand);
-        formData.append('product_image', val.product_image);
-        console.log(formData);
-        try {
 
-          await addProduct({
-            body: formData,
-            token: user.token
-          }).unwrap();
-          toast.success('add success');
-          nav(-1);
-        } catch (err) {
-          console.log(err);
-          toast.error(`${err.data?.message}`);
-        }
       },
-      //validationSchema: productSchema
+      validationSchema: productSchema
 
     });
 
+  console.log(data);
   return (
     <Card color="transparent" shadow={false} className="max-w-sm  mx-auto mt-4 mb-4">
       <Typography variant="h4" color="blue-gray">
-        Add Product
+        Edit Product
       </Typography>
 
       <form onSubmit={handleSubmit} className="mt-2">
@@ -88,6 +69,7 @@ const ProductForm = () => {
             placeholder="product_name"
             label="product_name"
             name="product_name"
+            value={values.product_name}
             onChange={handleChange}
           />
           {errors.product_name && touched.product_name && <h1 className='text-pink-700'>{errors.product_name}</h1>}
@@ -97,6 +79,7 @@ const ProductForm = () => {
             placeholder="product_price"
             label="product_price"
             name="product_price"
+            value={values.product_price}
             onChange={handleChange}
           />
           {errors.product_price && touched.product_price && <h1 className='text-pink-700'>{errors.product_price}</h1>}
@@ -104,21 +87,22 @@ const ProductForm = () => {
             size="lg"
             placeholder="countInStock"
             label="countInStock"
+            value={values.countInStock}
             onChange={handleChange}
             name="countInStock"
           />
           {errors.countInStock && touched.countInStock && <h1 className='text-pink-700'>{errors.countInStock}</h1>}
-          <Select onChange={(e) => setFieldValue('brand', e)} label="Select Brand">
+          <Select value={values.brand} onChange={(e) => setFieldValue('brand', e)} label="Select Brand">
             <Option value="Nike">Nike</Option>
             <Option value="Panasonic">Panasonic</Option>
             <Option value="Samsung">Samsung</Option>
             <Option value="Dolce">Dolce</Option>
             <Option value="Kfc">Kfc</Option>
           </Select>
-          <Select onChange={(e) => setFieldValue('category', e)} label="Select Category">
-            <Option value="Clothes">Clothes</Option>
-            <Option value="Beauty">Beauty</Option>
-            <Option value="Tech">Tech</Option>
+          <Select value={values.category} onChange={(e) => setFieldValue('category', e)} label="Select Category">
+            <Option value="clothes">Clothes</Option>
+            <Option value="beauty">Beauty</Option>
+            <Option value="tech">Tech</Option>
           </Select>
 
           <Textarea
@@ -126,6 +110,7 @@ const ProductForm = () => {
             placeholder="product_detail"
             label="product_detail"
             name="product_detail"
+            value={values.product_detail}
             onChange={handleChange}
           />
 
@@ -146,13 +131,14 @@ const ProductForm = () => {
               accept='image/*'
             />
             {errors.product_image && touched.product_image && <h1 className='text-pink-700'>{errors.product_image}</h1>}
-            {values.imageReview && <img src={values.imageReview} alt="" />}
+
+            {values.imageReview && <img src={values.product_image === null ? `${imageUrl}${values.imageReview}` : values.imageReview} alt="" />}
           </div>
 
 
         </div>
 
-        <Button loading={isLoading} type="submit" className="mt-6" fullWidth>
+        <Button type="submit" className="mt-6" fullWidth>
           Submit
         </Button>
 
@@ -160,4 +146,4 @@ const ProductForm = () => {
     </Card>
   )
 }
-export default ProductForm
+export default ProductEditForm
