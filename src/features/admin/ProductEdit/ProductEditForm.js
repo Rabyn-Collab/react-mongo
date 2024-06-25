@@ -57,6 +57,7 @@ const ProductEditForm = ({ data }) => {
         formData.append('category', val.category);
         formData.append('brand', val.brand);
 
+
         try {
           if (val.product_image === null) {
             await updateProduct({
@@ -66,7 +67,7 @@ const ProductEditForm = ({ data }) => {
             }).unwrap();
 
           } else {
-            formData.append('product_image', val.product_image);
+            formData.append('image', val.product_image);
             formData.append('imagePath', data.product_image);
             await updateProduct({
               id: data._id,
@@ -75,10 +76,11 @@ const ProductEditForm = ({ data }) => {
             }).unwrap();
           }
           toast.success('successfully updated');
-
+          nav(-1);
         } catch (err) {
           toast.error(`${err.data?.message}`)
         }
+
       },
       validationSchema: productSchema
 
@@ -168,7 +170,7 @@ const ProductEditForm = ({ data }) => {
 
         </div>
 
-        <Button type="submit" className="mt-6" fullWidth>
+        <Button loading={isLoading} type="submit" className="mt-6" fullWidth>
           Submit
         </Button>
 
