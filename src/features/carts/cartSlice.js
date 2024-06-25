@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { clearCartsFromLocal, setCartsToLocal } from "../shared/localstorage";
+import { clearCartsFromLocal, getCartsFromLocal, setCartsToLocal } from "../shared/localstorage";
 
 
 
