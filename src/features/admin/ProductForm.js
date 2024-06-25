@@ -56,7 +56,7 @@ const ProductForm = () => {
         formData.append('category', val.category);
         formData.append('brand', val.brand);
         formData.append('product_image', val.product_image);
-        console.log(formData);
+
         try {
 
           await addProduct({

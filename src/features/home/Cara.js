@@ -1,6 +1,7 @@
 import { Carousel } from '@material-tailwind/react'
 import React from 'react'
 import { useGetTopProductsQuery } from '../shared/productApi'
+import { imageUrl } from '../../constants/constants';
 
 const Cara = () => {
   const { data, isLoading, error, } = useGetTopProductsQuery();
@@ -34,7 +35,7 @@ const Cara = () => {
         {data?.data.map(({ _id, product_image }) => {
           return <img
             key={_id}
-            src={product_image}
+            src={`${imageUrl}${product_image}`}
             alt="image 1"
             className="h-full w-full object-cover"
           />;

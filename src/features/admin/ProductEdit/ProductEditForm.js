@@ -12,10 +12,12 @@ import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
 import { useSelector } from "react-redux";
 import { imageUrl } from "../../../constants/constants";
+import { toast } from "react-toastify";
+import { useUpdateProductMutation } from "../../shared/productApi";
 
 
 const ProductEditForm = ({ data }) => {
-
+  const [updateProduct, { isLoading }] = useUpdateProductMutation();
   const { user } = useSelector((state) => state.userSlice);
   const nav = useNavigate();
 
@@ -47,14 +49,42 @@ const ProductEditForm = ({ data }) => {
       },
 
       onSubmit: async (val, { resetForm }) => {
+        const formData = new FormData();
+        formData.append('product_name', val.product_name);
+        formData.append('product_detail', val.product_detail);
+        formData.append('product_price', Number(val.product_price));
+        formData.append('countInStock', Number(val.countInStock));
+        formData.append('category', val.category);
+        formData.append('brand', val.brand);
 
+        try {
+          if (val.product_image === null) {
+            await updateProduct({
+              id: data._id,
+              token: user.token,
+              body: formData
+            }).unwrap();
 
+          } else {
+            formData.append('product_image', val.product_image);
+            formData.append('imagePath', data.product_image);
+            await updateProduct({
+              id: data._id,
+              token: user.token,
+              body: formData
+            }).unwrap();
+          }
+          toast.success('successfully updated');
+
+        } catch (err) {
+          toast.error(`${err.data?.message}`)
+        }
       },
       validationSchema: productSchema
 
     });
 
-  console.log(data);
+
   return (
     <Card color="transparent" shadow={false} className="max-w-sm  mx-auto mt-4 mb-4">
       <Typography variant="h4" color="blue-gray">
@@ -100,9 +130,9 @@ const ProductEditForm = ({ data }) => {
             <Option value="Kfc">Kfc</Option>
           </Select>
           <Select value={values.category} onChange={(e) => setFieldValue('category', e)} label="Select Category">
-            <Option value="clothes">Clothes</Option>
-            <Option value="beauty">Beauty</Option>
-            <Option value="tech">Tech</Option>
+            <Option value="Clothes">Clothes</Option>
+            <Option value="Beauty">Beauty</Option>
+            <Option value="Tech">Tech</Option>
           </Select>
 
           <Textarea

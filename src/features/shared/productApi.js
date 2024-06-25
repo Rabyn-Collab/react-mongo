@@ -23,17 +23,29 @@ export const productApi = createApi({
       query: () => ({
         url: '/top_products',
         method: 'GET'
-      })
+      }),
+      providesTags: ['Product']
     }),
 
     getProductById: builder.query({
       query: (query) => ({
         url: `/${query}`,
         method: 'GET'
-      })
+      }),
+      providesTags: ['Product']
     }),
 
-
+    updateProduct: builder.mutation({
+      query: (query) => ({
+        url: `/${query.id}`,
+        body: query.body,
+        method: 'PATCH',
+        headers: {
+          Authorization: query.token
+        }
+      }),
+      invalidatesTags: ['Product']
+    }),
 
     addProduct: builder.mutation({
       query: (query) => ({
@@ -54,4 +66,4 @@ export const productApi = createApi({
 });
 
 
-export const { useGetProductsQuery, useGetProductByIdQuery, useGetTopProductsQuery, useAddProductMutation } = productApi;
+export const { useGetProductsQuery, useGetProductByIdQuery, useGetTopProductsQuery, useAddProductMutation, useUpdateProductMutation } = productApi;
