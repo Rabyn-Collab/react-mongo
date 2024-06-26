@@ -6,7 +6,7 @@ import { clearCartsFromLocal, getCartsFromLocal, setCartsToLocal } from "../shar
 
 
 
-export const userSlice = createSlice({
+export const cartSlice = createSlice({
   name: 'cartSlice',
   initialState: {
     carts: getCartsFromLocal()
@@ -35,4 +35,4 @@ export const userSlice = createSlice({
 });
 
 
-export const { addUser, userLogOut } = userSlice.actions;
+export const { setToCart, removeFromCart, clearCart } = cartSlice.actions;

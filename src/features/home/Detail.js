@@ -1,8 +1,11 @@
 import React from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useGetProductByIdQuery } from '../shared/productApi';
-import { Button, Card, Typography } from '@material-tailwind/react';
+import { Button, Card, Option, Select, Typography } from '@material-tailwind/react';
 import { imageUrl } from '../../constants/constants';
+import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import { setToCart } from '../carts/cartSlice';
 
 const Detail = () => {
   const { id } = useParams();
@@ -44,65 +47,95 @@ export default Detail
 
 
 export const AddCart = ({ product }) => {
+  const dispatch = useDispatch();
+  const nav = useNavigate();
+  const { carts } = useSelector((state) => state.cartSlice);
+  const isExist = carts.find((cart) => cart._id === product._id);
 
-  const TABLE_ROWS = [
-    {
-      name: "Product Name",
-      job: product.product_name,
-
-    },
-    {
-      name: "Qty",
-      job: 1,
-
-    },
+  const formik = useFormik({
+    initialValues: {
+      qty: isExist?.qty || 1
+    }
+  });
 
 
-  ];
 
+
+  const handleSubmit = () => {
+    dispatch(setToCart({ ...product, qty: Number(formik.values.qty) }));
+    nav('/carts');
+  }
 
   return (
     <Card className="h-full w-full overflow-scroll">
       <table className="w-full min-w-max table-auto text-left">
+        <thead>
+          <tr>
 
+            <th
 
-        {TABLE_ROWS.map(({ name, job, date }, index) => {
-          const isLast = index === TABLE_ROWS.length - 1;
-          const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+              className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+            >
+              <Typography
+                variant="small"
+                color="blue-gray"
+                className="font-normal leading-none opacity-70"
+              >
+                Product Name
+              </Typography>
+            </th>
+            <th
 
-          return (
-            <tr key={name}>
-              <td className={classes}>
-                <Typography
-                  variant="small"
-                  color="blue-gray"
-                  className="font-normal"
-                >
-                  {name}
-                </Typography>
-              </td>
-              <td className={classes}>
-                <Typography
-                  variant="small"
-                  color="blue-gray"
-                  className="font-normal"
-                >
-                  {job}
-                </Typography>
-              </td>
+              className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+            >
+              <Typography
+                variant="small"
+                color="blue-gray"
+                className="font-normal leading-none opacity-70"
+              >
+                {product.product_name}
+              </Typography>
+            </th>
 
-            </tr>
-          );
-        })}
+          </tr>
 
+          <tr>
 
+            <th
 
+              className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+            >
+              <Typography
+                variant="small"
+                color="blue-gray"
+                className="font-normal leading-none opacity-70"
+              >
+                Qty
+              </Typography>
+            </th>
+            <th
+
+              className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+            >
+              <div>
+
+                <select defaultValue={formik.values.qty} name="qty" id="" onChange={(e) => formik.setFieldValue('qty', e.target.value)}>
+                  {[...Array(product.countInStock).keys()].map((c) => {
+                    return <option key={c + 1} value={c + 1}>{c + 1}</option>
+                  })}
+                </select>
+              </div>
+            </th>
+
+          </tr>
+
+        </thead>
 
 
 
       </table>
       <div className='flex justify-center pt-7'>
-        <Button>Add To Cart</Button>
+        <Button onClick={handleSubmit}>Add To Cart</Button>
       </div>
     </Card>
   )

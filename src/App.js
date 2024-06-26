@@ -12,14 +12,9 @@ import AdminProducts from './features/admin/ProductAdmin';
 import ProductForm from './features/admin/ProductForm';
 
 import ProductEdit from './features/admin/ProductEdit/ProductEdit';
+import CartPage from './features/carts/CartPage';
 
 
-const movie = {
-  name: 'avatar',
-  actors: [
-
-  ]
-};
 
 const router = createBrowserRouter([
   {
@@ -41,6 +36,10 @@ const router = createBrowserRouter([
       { path: 'edit-product/:id', element: <ProductEdit /> },
 
 
+      { path: 'carts', element: <CartPage /> },
+
+
+
       { path: 'about', element: <About /> },
 
 
@@ -56,6 +55,9 @@ const router = createBrowserRouter([
   },
 ]);
 const App = () => {
+
+
+
 
   return <RouterProvider router={router} />
 }
