@@ -2,6 +2,7 @@ import { Button } from '@material-tailwind/react';
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { imageUrl } from '../../constants/constants';
+import { setToCart } from './cartSlice';
 
 
 const CartPage = () => {
@@ -28,8 +29,8 @@ const CartPage = () => {
                 <img className='w-full h-36' src={`${imageUrl}${cart.product_image}`} alt="" />
                 <div>
                   <select defaultValue={cart.qty} name="qty" id="" onChange={(e) => {
-                    console.log({ ...cart, qty: Number(e.target.value) })
-                    // dispatch({ ...cart, qty: Number(e.target.value) });
+
+                    dispatch(setToCart({ ...cart, qty: Number(e.target.value) }));
                   }}>
                     {[...Array(cart.countInStock).keys()].map((c) => {
                       return <option key={c + 1} value={c + 1}>{c + 1}</option>

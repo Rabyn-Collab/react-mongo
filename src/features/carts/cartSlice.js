@@ -13,9 +13,9 @@ export const cartSlice = createSlice({
   },
   reducers: {
     setToCart: (state, action) => {
-      const isExist = state.carts.find((cart) => cart.id === action.payload.id);
+      const isExist = state.carts.find((cart) => cart._id === action.payload._id);
       if (isExist) {
-        state.carts = state.carts.map((cart) => cart.id === action.payload.id ? action.payload : cart);
+        state.carts = state.carts.map((cart) => cart._id === action.payload._id ? action.payload : cart);
         setCartsToLocal(state.carts);
       } else {
         state.carts.push(action.payload);
