@@ -11,7 +11,7 @@ export const userSlice = createSlice({
     user: getUserFromLocal()
   },
   reducers: {
-    addUser: (state, action) => {
+    setUser: (state, action) => {
       state.user = action.payload;
       addUserToLocal(state.user);
     },
@@ -23,4 +23,4 @@ export const userSlice = createSlice({
 });
 
 
-export const { addUser, userLogOut } = userSlice.actions;
+export const { setUser, userLogOut } = userSlice.actions;

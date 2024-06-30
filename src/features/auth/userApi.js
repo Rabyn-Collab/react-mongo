@@ -27,10 +27,21 @@ export const userApi = createApi({
       })
     }),
 
+    userUpdate: builder.mutation({
+      query: (query) => ({
+        url: `/profile/${query.id}`,
+        body: query.body,
+        method: 'PATCH',
+        headers: {
+          Authorization: query.token
+        }
+      })
+    }),
+
 
 
   }),
 });
 
 
-export const { useUserLoginMutation, useUserRegisterMutation } = userApi;
+export const { useUserLoginMutation, useUserRegisterMutation, useUserUpdateMutation } = userApi;

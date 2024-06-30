@@ -71,7 +71,11 @@ function ProfileMenu({ user }) {
   const handleClick = (val) => {
     switch (val) {
       case 'profile':
+        nav('/userProfile');
+        break;
 
+      case 'carts':
+        nav('/carts');
         break;
 
       case 'products':

@@ -13,6 +13,9 @@ import ProductForm from './features/admin/ProductForm';
 
 import ProductEdit from './features/admin/ProductEdit/ProductEdit';
 import CartPage from './features/carts/CartPage';
+import UserProfile from './features/user/UserProfile';
+import AdminRoutes from './ui/AdminRoutes';
+import UserSecRoutes from './ui/UserSecRoutes';
 
 
 
@@ -31,25 +34,33 @@ const router = createBrowserRouter([
           { path: 'signup', element: <SignUp /> },
         ]
       },
-      { path: 'allProducts', element: <AdminProducts /> },
-      { path: 'add-product', element: <ProductForm /> },
-      { path: 'edit-product/:id', element: <ProductEdit /> },
 
 
-      { path: 'carts', element: <CartPage /> },
+      {
+        element: <AdminRoutes />,
+        children: [
+          { path: 'allProducts', element: <AdminProducts /> },
+          { path: 'add-product', element: <ProductForm /> },
+          { path: 'edit-product/:id', element: <ProductEdit /> },
+        ]
+      },
+
+
+
+      {
+        element: <UserSecRoutes />,
+        children: [
+          { path: 'carts', element: <CartPage /> },
+          { path: 'userProfile', element: <UserProfile /> },
+        ]
+      },
+
 
 
 
       { path: 'about', element: <About /> },
 
 
-
-
-
-
-
-
-      { path: 'about', element: <About /> },
       { path: '*', element: <NotFound /> },
     ]
   },

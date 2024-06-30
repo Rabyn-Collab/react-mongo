@@ -50,6 +50,7 @@ export const AddCart = ({ product }) => {
   const dispatch = useDispatch();
   const nav = useNavigate();
   const { carts } = useSelector((state) => state.cartSlice);
+  const { user } = useSelector((state) => state.userSlice);
   const isExist = carts.find((cart) => cart._id === product._id);
 
   const formik = useFormik({
@@ -135,7 +136,7 @@ export const AddCart = ({ product }) => {
 
       </table>
       <div className='flex justify-center pt-7'>
-        <Button onClick={handleSubmit}>Add To Cart</Button>
+        <Button disabled={user?.isAdmin || !user} onClick={handleSubmit}>Add To Cart</Button>
       </div>
     </Card>
   )

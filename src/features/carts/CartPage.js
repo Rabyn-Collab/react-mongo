@@ -1,21 +1,42 @@
 import { Button } from '@material-tailwind/react';
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { imageUrl } from '../../constants/constants';
-import { setToCart } from './cartSlice';
+import { clearCart, setToCart } from './cartSlice';
+import { useAddOrderMutation } from '../orders/orderApi';
+import { toast } from 'react-toastify';
+import CustomDialog from '../../ui/CustomDialog';
 
 
 const CartPage = () => {
+  const [addOrder, { isLoading }] = useAddOrderMutation();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(!open);
+
+
 
   const { carts } = useSelector((state) => state.cartSlice);
+  const { user } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
   const total = carts.reduce((a, b) => a + b.qty * b.product_price, 0);
 
 
 
 
-  const handleSubmit = () => {
-
+  const handleSubmit = async () => {
+    try {
+      await addOrder({
+        body: {
+          totalAmount: total,
+          products: carts.map((cart) => ({ product: cart._id, qty: cart.qty }))
+        },
+        token: user.token
+      }).unwrap();
+      dispatch(clearCart());
+      toast.success('successfully added');
+    } catch (err) {
+      toast.error('something went wrong');
+    }
   }
 
   return (
@@ -47,7 +68,8 @@ const CartPage = () => {
             <h1>Total</h1>
             <p>{total}</p>
           </div>
-          <Button className='mt-10'>Place An Order</Button>
+          <Button loading={isLoading} onClick={handleOpen} className='mt-10'>Place An Order</Button>
+          <CustomDialog open={open} handleOpen={handleOpen} handleConfirm={handleSubmit} />
         </div>}
 
     </div>
